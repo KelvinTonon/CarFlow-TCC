@@ -12,14 +12,27 @@ class AgendamentoController extends Controller
 {
     public function index()
     {
-        $agendamentos = Agendamento::with(['cliente', 'veiculo', 'servico'])->get();
+        if (auth()->user()->tipo_usuario === 'admin') {
+            $agendamentos = Agendamento::with(['cliente', 'veiculo', 'servico'])->get();
+        } else {
+            $agendamentos = Agendamento::where('cliente_id', auth()->user()->cliente_id)
+                ->with(['cliente', 'veiculo', 'servico'])
+                ->get();
+        }
+
         return view('agendamentos.index', compact('agendamentos'));
     }
 
     public function create()
     {
-        $clientes = Cliente::all();
-        $veiculos = Veiculo::all();
+        if (auth()->user()->tipo_usuario === 'admin') {
+            $clientes = Cliente::all();
+            $veiculos = Veiculo::all();
+        } else {
+            $clientes = Cliente::where('id', auth()->user()->cliente_id)->get();
+            $veiculos = Veiculo::where('cliente_id', auth()->user()->cliente_id)->get();
+        }
+
         $servicos = Servico::all();
 
         return view('agendamentos.create', compact('clientes', 'veiculos', 'servicos'));

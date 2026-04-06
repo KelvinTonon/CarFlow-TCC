@@ -6,6 +6,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\VeiculoController;
 use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\AgendamentoController;
+use App\Http\Controllers\DashboardController;
 use PhpParser\Builder\Function_;
 
 Route::get('/', function () {
@@ -26,6 +27,9 @@ Route::resource('clientes', ClienteController::class);
 Route::resource('veiculos', VeiculoController::class);
 Route::resource('servicos', ServicoController::class);
 Route::resource('agendamentos', AgendamentoController::class);
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
 route::get('/veiculos-por-cliente/{cliente_id}', function ($cliente_id){ 
     return \App\Models\Veiculo::where('cliente_id', $cliente_id)->get();

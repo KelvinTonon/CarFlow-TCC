@@ -1,15 +1,60 @@
-<h1>Cadastrar Serviço</h1>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="text-xl font-semibold text-gray-800">
+            Cadastrar Serviço
+        </h2>
+    </x-slot>
 
-<form action="{{ route('servicos.store') }}" method="POST">
-    @csrf
+    <div class="p-6">
 
-    <input type="text" name="nome_servico" placeholder="Nome"><br><br>
-    <textarea name="descricao" placeholder="Descrição"></textarea><br><br>
-    <input type="number" name="preco" step="0.01" placeholder="Preço"><br><br>
-    <input type="number" name="duracao_estimada" placeholder="Duração (min)"><br><br>
+        <form action="{{ route('servicos.store') }}" method="POST" class="max-w-lg">
+            @csrf
 
-    <button type="submit">Salvar</button>
-</form>
+            <!-- Nome -->
+            <div class="mb-4">
+                <label class="block mb-1 font-medium">Nome do Serviço</label>
+                <input type="text" name="nome_servico" required
+                    class="w-full border rounded p-2"
+                    placeholder="Ex: Lavagem completa">
+            </div>
 
-<br>
-<a href="{{ route('servicos.index') }}">← Voltar</a>
+            <!-- Descrição -->
+            <div class="mb-4">
+                <label class="block mb-1 font-medium">Descrição</label>
+                <textarea name="descricao"
+                    class="w-full border rounded p-2"
+                    placeholder="Descreva o serviço"></textarea>
+            </div>
+
+            <!-- Preço -->
+            <div class="mb-4">
+                <label class="block mb-1 font-medium">Preço (R$)</label>
+                <input type="number" name="preco" step="0.01" required
+                    class="w-full border rounded p-2"
+                    placeholder="Ex: 50.00">
+            </div>
+
+            <!-- Duração -->
+            <div class="mb-4">
+                <label class="block mb-1 font-medium">Duração (minutos)</label>
+                <input type="number" name="duracao_estimada" required
+                    class="w-full border rounded p-2"
+                    placeholder="Ex: 60">
+            </div>
+
+            <!-- Botão -->
+            <button
+                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                Salvar
+            </button>
+
+            <!-- Voltar -->
+            <a href="{{ route('servicos.index') }}"
+               class="ml-4 text-gray-600 hover:underline">
+                ← Voltar
+            </a>
+
+        </form>
+
+    </div>
+</x-app-layout>
